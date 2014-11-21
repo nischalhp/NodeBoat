@@ -1,0 +1,132 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+</head>
+
+<body>
+
+<div class="well offset1 span12 " id=""></div>
+<div id = "container">
+<div id = "row">
+	<button id="start" class="span6 btn-large">Start</button>
+	<button id="stop" class="span6 btn-large">Stop</button>
+</div>
+<div class="well offset1 span12 " id=""></div>
+
+<div id = "row ">
+<button id="left" class="span4 btn-large">Left</button>
+<button id="center" class="span4 btn-large">Center</button>
+<button id="right" class="span4 btn-large">right</button>
+</div>
+</div>
+</div>
+</body>
+    <script type="text/javascript">
+      var speed = 255;
+      var degree = 90;
+     function changeDegree(degree) {
+     	console.log(degree);
+     	$.get( "/rudder/"+degree, function( data ) {
+
+		});
+     };
+
+     function left () {
+  			degree +=10;
+  			degree = degree >= 135 ? 135 : degree;
+  			changeDegree(degree);
+     };
+
+     function right() {
+     	  	degree -= 10;
+  			degree = degree <= 45 ? 45 : degree;
+			changeDegree(degree);
+
+     };
+
+     function center() {
+     	console.log('center');
+ 			degree = 90;
+			changeDegree(degree);
+
+     };
+
+     function start() {
+     	console.log('start');
+     	 $.get( "/motor/1", function( data ) {
+
+		});
+     };
+
+     function s() {
+     	console.log('stop');
+     		$.get( "/motor/0", function( data ) {
+
+			});
+     };
+
+
+	$( document ).ready(function() {
+
+		window.ondevicemotion = function(event) {
+  			ax = event.accelerationIncludingGravity.x
+  			ay = event.accelerationIncludingGravity.y
+  			az = event.accelerationIncludingGravity.z
+  			rotation = event.rotationRate;
+  			if (rotation != null) {
+    			arAlpha = Math.round(rotation.alpha);
+    			arBeta = Math.round(rotation.beta);
+    			arGamma = Math.round(rotation.gamma);
+  			}
+		}
+
+
+    	$( "#left" ).click(function() {
+    		left();
+		});
+		$( "#right" ).click(function() {
+			right();
+		});
+		$( "#center" ).click(function() {
+			center();
+		});
+
+		$( "#start" ).click(function() {
+			start();
+		});
+
+		$( "#stop" ).click(function() {
+  			s();
+
+		});
+
+		$( document ).keydown(function(obj) {
+			console.log(obj.keyCode);
+			switch (obj.keyCode) {
+				case 37:
+					left();
+					break;
+				case 39:
+					right();
+					break;
+				case 40:
+					s();
+					break;
+				case 38:
+					center();
+					break;
+				case 32:
+					start();
+					break;
+			}
+		});
+
+	});
+    </script>
+</html>
