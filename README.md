@@ -1,7 +1,7 @@
 NodeBoat
 ========
 
-JSConf Asia NodeBoat workshop where we used stream.io to build a pirate shit!
+JSConf Asia NodeBoat workshop where we used stream.io to build a pirate ship!
 
 Well we built a pirate ship that captured our hearts! Absolutely delightful experience.
 
